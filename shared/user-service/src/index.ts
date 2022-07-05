@@ -21,7 +21,7 @@ export function login(username: string, password:string): UserInfo | null {
         };
     }
 
-    return emptyUser();
+    return null;
 }
 
 export function saveProfile(user: UserInfo): void {
