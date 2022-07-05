@@ -1,5 +1,5 @@
 {
-  "name": "login-form",
+  "name": "@microfedemo/login-form",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
