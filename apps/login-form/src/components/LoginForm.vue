@@ -10,6 +10,7 @@
             <input id="inpPassword" type="password" v-model="password" />
         </div>
         <button type="submit" @click="doLogin">Login</button>
+        <span class="error-message">{{ errorMsg }}</span>
     </div>
     <div v-if="isLoggedIn" class="">
         <span>Welcome! </span>
@@ -19,20 +20,32 @@
 </template>
 
 <script setup lang="ts">
+import type { Ref } from "vue";
+import type { UserInfo } from "@microfedemo/user-service";
+
 import { ref } from "vue";
+import { login, emptyUser } from "@microfedemo/user-service";
 
 const isLoggedIn = ref(false);
 const username = ref("");
 const password = ref("");
+const errorMsg = ref("");
+const user: Ref<UserInfo> = ref(emptyUser());
 
 function doLogin(): void {
-    isLoggedIn.value = true;
+    const result = login(username.value, password.value);
+    if (result != null) {
+        user.value = result;
+        isLoggedIn.value = true;
+    }
+
     password.value = "";
     return;
 }
 
 function doLogout(): void {
     isLoggedIn.value = false;
+    user.value = emptyUser();
     return;
 }
 </script>
@@ -55,6 +68,12 @@ function doLogout(): void {
     display: inline-block;
     padding-right: 5px;
     padding-bottom: 5px;
+}
+
+.error-message { 
+    color: #FF0000;
+    display: block;
+    margin: 2px;
 }
 
 </style>
