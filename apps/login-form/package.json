@@ -2,18 +2,16 @@
   "name": "@microfedemo/login-form",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check build-only",
-    "preview": "vite preview --port 4173",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit",
+    "dev": "vite --port 5002 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --port 5002 --strictPort",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "vue": "^3.2.37",
-    "@microfedemo/user-service": "1.0.0"
+    "vue": "^3.2.37"
   },
   "devDependencies": {
+    "@originjs/vite-plugin-federation": "^1.1.6",
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/node": "^16.11.41",
     "@vitejs/plugin-vue": "^2.3.3",
