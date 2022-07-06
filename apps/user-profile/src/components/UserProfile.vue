@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { saveProfile, emptyUser } from "@microfedemo/user-service";
+import { saveProfile, emptyUser, type UserInfo } from "@microfedemo/user-service";
 
 const isLoggedIn = ref(false);
 const user = ref(emptyUser());
@@ -28,7 +28,23 @@ const errorMsg = ref("");
 
 function save(): void {
     saveProfile(user.value);
+
+    const updateEvent = new CustomEvent('profile-updated', { detail: user.value });
+    window.dispatchEvent(updateEvent);
+    console.log('[UserProfile] Event dispatched => ', updateEvent);
 }
+
+window.addEventListener('user-login', (evt: Event) => {
+    console.log('[UserProfile] Event received => ', evt);
+    user.value = { ...(<CustomEvent<UserInfo>>evt).detail };
+    isLoggedIn.value = true;
+});
+
+window.addEventListener('user-logout', (evt: Event) => {
+    console.log('[UserProfile] Event received => ', evt);
+    isLoggedIn.value = false;
+    user.value = emptyUser();
+});
 
 </script>
 
